@@ -1,4 +1,4 @@
-FROM horologger/btcshell:v0.0.1
+FROM horologger/btcshell:v0.0.2
 LABEL maintainer="horologger <horologger@protonmail.com>"
 
 # Start9 Packaging
