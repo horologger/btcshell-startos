@@ -1,0 +1,106 @@
+id: btcshell
+title: BTC Shell
+version: 0.0.1
+release-notes: BTC Shell 0.0.1
+license: Apache-2.0
+wrapper-repo: "https://github.com/horologger/btcshell-orange-startos"
+upstream-repo: "https://github.com/horologger/btcshell"
+support-site: "https://github.com/horologger/btcshell/issues"
+marketing-site: "https://github.com/horologger/btcshell"
+build: ["make"]
+description:
+  short: An open protocol for connecting lightning wallets to apps
+  long: |
+    NWC allows for sustained interaction between Bitcoin lightning wallets and apps. Once an app connection is created, the app can request payments through a LND Shell relay.
+assets:
+  license: LICENSE
+  icon: terminal-orange.png
+  instructions: instructions.md
+main:
+  type: docker
+  image: main
+  entrypoint: "docker_entrypoint.sh"
+  args: []
+  mounts:
+    main: /data
+    lnd: /mnt/lnd
+health-checks:
+  web-ui:
+    name: Web UI
+    success-message: LND Shell UI is ready
+    type: script
+config:
+  get:
+    type: script
+  set:
+    type: script
+properties: ~
+environment: ~
+volumes:
+  main:
+    type: data
+  lnd:
+    type: pointer
+    package-id: lnd
+    volume-id: main
+    path: /public
+    readonly: true
+interfaces:
+  main:
+    name: User Interface
+    description: Create connections with LND Shell
+    tor-config:
+      port-mapping:
+        80: "8080"
+    lan-config:
+      443:
+        ssl: true
+        internal: 8080
+    ui: true
+    protocols:
+      - tcp
+      - http
+dependencies:
+  bitcoind:
+    version: ">=27.1.0 <28.0.0"
+    description: BTC Shell works with your Bitcoin Core
+    requirement:
+      type: "required"
+      how: Use the BTC instance by default
+    config: ~
+backup:
+  create:
+    type: docker
+    image: compat
+    system: true
+    entrypoint: compat
+    args:
+      - duplicity
+      - create
+      - /mnt/backup
+      - /root/data
+    mounts:
+      BACKUP: "/mnt/backup"
+      main: "/root/data"
+  restore:
+    type: docker
+    image: compat
+    system: true
+    entrypoint: compat
+    args:
+      - duplicity
+      - restore
+      - /mnt/backup
+      - /root/data
+    mounts:
+      BACKUP: "/mnt/backup"
+      main: "/root/data"
+migrations:
+  from:
+    "*":
+      type: script
+      args: ["from"]
+  to:
+    "*":
+      type: script
+      args: ["to"]

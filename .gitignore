@@ -1,0 +1,10 @@
+.DS_Store
+.env
+*.db
+*.macaroon
+node_modules
+docker-images/
+*.s9pk
+scripts/*.js
+.vscode
+NOTES.md
