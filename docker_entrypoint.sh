@@ -43,14 +43,15 @@ FNVER="27.1"
 #cp /tmp/lnd-linux-arm64-v0.17.4-beta.rc1/lncli /usr/local/bin
 
 BTCFN="bitcoin-$FNVER-$FNARCH-linux-$FNSUFFIX.tar.gz"
-echo "Getting: "$BTCFN
+echo "Got: "$BTCFN
 
 #https://bitcoincore.org/bin/bitcoin-core-27.1/bitcoin-27.1-x86_64-linux-gnu.tar.gz
 #https://bitcoincore.org/bin/bitcoin-core-27.1/bitcoin-27.1-arm-linux-gnueabihf.tar.gz
 
-wget -O /tmp/bitcoin.tar.gz https://bitcoincore.org/bin/bitcoin-core-$FNVER/$BTCFN
-tar xzf /tmp/bitcoin.tar.gz -C /tmp
-cp /tmp/bitcoin-$FNVER/bin/bitcoin-cli /usr/local/bin
+# Now this is done in btcshell!
+# wget -O /tmp/bitcoin.tar.gz https://bitcoincore.org/bin/bitcoin-core-$FNVER/$BTCFN
+# tar xzf /tmp/bitcoin.tar.gz -C /tmp
+# cp /tmp/bitcoin-$FNVER/bin/bitcoin-cli /usr/local/bin
 
 mkdir -p /data/bin
 echo 'export PATH=/data/bin:$PATH' >> /root/.bashrc
