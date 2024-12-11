@@ -8,3 +8,4 @@ docker-images/
 scripts/*.js
 .vscode
 NOTES.md
+pre-036/
