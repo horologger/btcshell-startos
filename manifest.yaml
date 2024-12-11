@@ -9,7 +9,7 @@ support-site: "https://github.com/horologger/btcshell/issues"
 marketing-site: "https://github.com/horologger/btcshell"
 build: ["make"]
 description:
-  short: An open protocol for connecting lightning wallets to apps
+  short: An open protocol for connecting bitcoin
   long: |
     NWC allows for sustained interaction between Bitcoin lightning wallets and apps. Once an app connection is created, the app can request payments through a LND Shell relay.
 assets:
@@ -23,11 +23,10 @@ main:
   args: []
   mounts:
     main: /data
-    lnd: /mnt/lnd
 health-checks:
   web-ui:
     name: Web UI
-    success-message: LND Shell UI is ready
+    success-message: BTC Shell UI is ready
     type: script
 config:
   get:
@@ -39,16 +38,10 @@ environment: ~
 volumes:
   main:
     type: data
-  lnd:
-    type: pointer
-    package-id: lnd
-    volume-id: main
-    path: /public
-    readonly: true
 interfaces:
   main:
     name: User Interface
-    description: Create connections with LND Shell
+    description: Create connections with BTC Shell
     tor-config:
       port-mapping:
         80: "8080"
