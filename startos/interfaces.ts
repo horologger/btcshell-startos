@@ -11,7 +11,7 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
   const httpInterface = sdk.createInterface(effects, {
     name: 'Web UI and git (HTTP)',
     id: 'http',
-    description: 'Web UI for Gitea. Also used for git over HTTP',
+    description: 'Web UI for BTCShell. Also used for git over HTTP',
     type: 'ui',
     hasPrimary: true,
     masked: false,

@@ -8,9 +8,9 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    *
    * In this section, we fetch any resources or run any desired preliminary commands.
    */
-  console.info('Starting Gitea!')
+  console.info('Starting BTCShell!')
 
-  const { GITEA__server__ROOT_URL, GITEA__security__SECRET_KEY, smtp } =
+  const { BTCSHELL__server__ROOT_URL, BTCSHELL__security__SECRET_KEY, smtp } =
     await sdk.store.getOwn(effects, sdk.StorePath).const()
 
   let smtpCredentials: T.SmtpValue | null = null
@@ -23,26 +23,26 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     smtpCredentials = smtp.value
   }
 
-  let mailer: GiteaMailer = {
-    GITEA__mailer__ENABLED: 'false',
+  let mailer: BTCShellMailer = {
+    BTCSHELL__mailer__ENABLED: 'false',
   }
   if (smtpCredentials) {
     mailer = {
-      GITEA__mailer__ENABLED: 'true',
-      GITEA__mailer__SMTP_ADDR: smtpCredentials.server,
-      GITEA__mailer__SMTP_PORT: String(smtpCredentials.port),
-      GITEA__mailer__FROM: smtpCredentials.from,
-      GITEA__mailer__USER: smtpCredentials.login,
+      BTCSHELL__mailer__ENABLED: 'true',
+      BTCSHELL__mailer__SMTP_ADDR: smtpCredentials.server,
+      BTCSHELL__mailer__SMTP_PORT: String(smtpCredentials.port),
+      BTCSHELL__mailer__FROM: smtpCredentials.from,
+      BTCSHELL__mailer__USER: smtpCredentials.login,
     }
     if (smtpCredentials.password)
-      mailer.GITEA__mailer__PASSWD = smtpCredentials.password
+      mailer.BTCSHELL__mailer__PASSWD = smtpCredentials.password
   }
 
-  const env: GiteaEnv = {
-    GITEA__lfs__PATH: '/data/git/lfs',
-    GITEA__server__ROOT_URL,
-    GITEA__security__INSTALL_LOCK: 'true',
-    GITEA__security__SECRET_KEY,
+  const env: BTCShellEnv = {
+    BTCSHELL__lfs__PATH: '/data/git/lfs',
+    BTCSHELL__server__ROOT_URL,
+    BTCSHELL__security__INSTALL_LOCK: 'true',
+    BTCSHELL__security__SECRET_KEY,
     ...(mailer || {}),
   }
 
@@ -61,7 +61,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    * Each daemon defines its own health check, which can optionally be exposed to the user.
    */
   return sdk.Daemons.of(effects, started, healthReceipts).addDaemon('primary', {
-    image: { id: 'gitea' },
+    image: { id: 'btcshell' },
     command: ['/usr/bin/entrypoint', '--', '/bin/s6-svscan', '/etc/s6'],
     env,
     mounts: sdk.Mounts.of().addVolume('main', null, '/data', false),
@@ -78,22 +78,22 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   })
 })
 
-type GiteaEnv = Partial<NonNullable<GiteaMailer>> & {
-  GITEA__lfs__PATH: '/data/git/lfs'
-  GITEA__server__ROOT_URL: string
-  GITEA__security__INSTALL_LOCK: 'true'
-  GITEA__security__SECRET_KEY: string
+type BTCShellEnv = Partial<NonNullable<BTCShellMailer>> & {
+  BTCSHELL__lfs__PATH: '/data/git/lfs'
+  BTCSHELL__server__ROOT_URL: string
+  BTCSHELL__security__INSTALL_LOCK: 'true'
+  BTCSHELL__security__SECRET_KEY: string
 }
 
-type GiteaMailer =
+type BTCShellMailer =
   | {
-      GITEA__mailer__ENABLED: 'false'
+      BTCSHELL__mailer__ENABLED: 'false'
     }
   | {
-      GITEA__mailer__ENABLED: 'true'
-      GITEA__mailer__SMTP_ADDR: string
-      GITEA__mailer__SMTP_PORT: string
-      GITEA__mailer__FROM: string
-      GITEA__mailer__USER: string
-      GITEA__mailer__PASSWD?: string
+      BTCSHELL__mailer__ENABLED: 'true'
+      BTCSHELL__mailer__SMTP_ADDR: string
+      BTCSHELL__mailer__SMTP_PORT: string
+      BTCSHELL__mailer__FROM: string
+      BTCSHELL__mailer__USER: string
+      BTCSHELL__mailer__PASSWD?: string
     }

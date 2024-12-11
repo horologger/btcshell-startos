@@ -1,24 +1,24 @@
 import { setupManifest } from '@start9labs/start-sdk'
 
 export const manifest = setupManifest({
-  id: 'gitea',
-  title: 'Gitea',
+  id: 'btcshell',
+  title: 'BTCShell',
   license: 'mit',
-  wrapperRepo: 'https://github.com/Start9Labs/gitea-startos',
-  upstreamRepo: 'https://github.com/Start9Labs/gitea',
-  supportSite: 'https://docs.gitea.io/',
-  marketingSite: 'https://gitea.io/',
+  wrapperRepo: 'https://github.com/horologger/btcshell-startos',
+  upstreamRepo: 'https://github.com/horologger/btcshell',
+  supportSite: 'https://github.com/horologger/btcshell/issues',
+  marketingSite: 'https://github.com/horologger/btcshell',
   donationUrl: null,
   description: {
-    short: 'A painless self-hosted Git service',
-    long: 'Gitea is a community managed lightweight code hosting solution written in Go. It is published under the MIT license',
+    short: 'Shell with bitcoin-cli tools.',
+    long: 'Shell with bitcoin-cli tools.',
   },
   assets: [],
   volumes: ['main'],
   images: {
-    gitea: {
+    btcshell: {
       source: {
-        dockerTag: 'gitea/gitea',
+        dockerTag: 'horologger/btcshell:v0.0.3',
       },
     },
   },

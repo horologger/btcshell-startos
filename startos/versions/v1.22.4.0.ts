@@ -27,16 +27,16 @@ export const v1_22_4_0 = VersionInfo.of({
 
       // initialize the store
       await sdk.store.setOwn(effects, sdk.StorePath, {
-        GITEA__security__SECRET_KEY: await readFile(
+        BTCSHELL__security__SECRET_KEY: await readFile(
           '/data/start9/secret-key.txt',
           'base64',
         ),
-        GITEA__server__ROOT_URL: urls.find((u) =>
+        BTCSHELL__server__ROOT_URL: urls.find((u) =>
           localMode
             ? u.includes('.local')
             : u.startsWith('http:') && u.includes('.onion'),
         )!,
-        GITEA__service__DISABLE_REGISTRATION: true,
+        BTCSHELL__service__DISABLE_REGISTRATION: true,
         smtp: smtp
           ? {
               selection: 'custom',

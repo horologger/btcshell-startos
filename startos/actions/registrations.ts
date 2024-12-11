@@ -7,7 +7,7 @@ export const registrations = sdk.Action.withoutInput(
   // metadata
   async ({ effects }) => {
     const disabled = await sdk.store
-      .getOwn(effects, sdk.StorePath.GITEA__service__DISABLE_REGISTRATION)
+      .getOwn(effects, sdk.StorePath.BTCSHELL__service__DISABLE_REGISTRATION)
       .const()
 
     return {
@@ -16,7 +16,7 @@ export const registrations = sdk.Action.withoutInput(
         ? 'Allow new accounts to be created on your server'
         : 'Prohibit new accounts from being created on your server',
       warning: disabled
-        ? 'Anyone with your Gitea URL will be able to create an account on your server, which represents a security risk. Be careful!'
+        ? 'Anyone with your BTCShell URL will be able to create an account on your server, which represents a security risk. Be careful!'
         : null,
       allowedStatuses: 'any',
       group: null,
@@ -27,12 +27,12 @@ export const registrations = sdk.Action.withoutInput(
   // the execution function
   async ({ effects }) => {
     const disabled = await sdk.store
-      .getOwn(effects, sdk.StorePath.GITEA__service__DISABLE_REGISTRATION)
+      .getOwn(effects, sdk.StorePath.BTCSHELL__service__DISABLE_REGISTRATION)
       .const()
 
     sdk.store.setOwn(
       effects,
-      sdk.StorePath.GITEA__service__DISABLE_REGISTRATION,
+      sdk.StorePath.BTCSHELL__service__DISABLE_REGISTRATION,
       !disabled,
     )
   },

@@ -39,12 +39,12 @@ export const inputSpec = InputSpec.of({
         spec: InputSpec.of({
           url: Value.text({
             name: 'URL',
-            warning: `the domain of this URL must already exist in StartOS and be assigned to Gitea's HTTP interface`,
+            warning: `the domain of this URL must already exist in StartOS and be assigned to BTCShell's HTTP interface`,
             required: true,
             default: null,
             inputmode: 'url',
             patterns: [sdk.patterns.url],
-            placeholder: 'e.g. https://gitea.my-domain.dev',
+            placeholder: 'e.g. https://btcshell.my-domain.dev',
           }),
         }),
       },
@@ -60,7 +60,7 @@ export const setPrimaryUrl = sdk.Action.withInput(
   async ({ effects }) => ({
     name: 'Set Primary Url',
     description:
-      'Choose which of your Gitea http URLs should serve as the primary URL for the purposes of creating links, sending invites, etc.',
+      'Choose which of your BTCShell http URLs should serve as the primary URL for the purposes of creating links, sending invites, etc.',
     warning: null,
     allowedStatuses: 'any',
     group: null,
@@ -75,7 +75,7 @@ export const setPrimaryUrl = sdk.Action.withInput(
     const systemUrls = await getHttpInterfaceUrls(effects)
 
     const url = await sdk.store
-      .getOwn(effects, sdk.StorePath.GITEA__server__ROOT_URL)
+      .getOwn(effects, sdk.StorePath.BTCSHELL__server__ROOT_URL)
       .const()
 
     return {
@@ -93,7 +93,7 @@ export const setPrimaryUrl = sdk.Action.withInput(
   async ({ effects, input }) =>
     sdk.store.setOwn(
       effects,
-      sdk.StorePath.GITEA__server__ROOT_URL,
+      sdk.StorePath.BTCSHELL__server__ROOT_URL,
       input.source.value.url,
     ),
 )

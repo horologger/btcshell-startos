@@ -10,12 +10,12 @@ import { setPrimaryUrl } from './actions/set-primary-url'
 // **** Install ****
 const install = sdk.setupInstall(async ({ effects }) => {
   await sdk.store.setOwn(effects, sdk.StorePath, {
-    GITEA__security__SECRET_KEY: utils.getDefaultString({
+    BTCSHELL__security__SECRET_KEY: utils.getDefaultString({
       charset: 'A-Z,a-z,0-9,+,/',
       len: 32,
     }),
-    GITEA__server__ROOT_URL: '',
-    GITEA__service__DISABLE_REGISTRATION: true,
+    BTCSHELL__server__ROOT_URL: '',
+    BTCSHELL__service__DISABLE_REGISTRATION: true,
     smtp: {
       selection: 'disabled',
       value: {},
