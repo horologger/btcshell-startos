@@ -27703,7 +27703,6 @@ const manage_smtp_1 = __nccwpck_require__(6893);
 exports.actions = sdk_1.sdk.Actions.of()
     .addAction(set_primary_url_1.setPrimaryUrl)
     .addAction(registrations_1.registrations)
-    .addAction(manage_smtp_1.manageSmtp);
 
 
 /***/ }),
@@ -27714,29 +27713,11 @@ exports.actions = sdk_1.sdk.Actions.of()
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.manageSmtp = exports.inputSpec = void 0;
 const sdk_1 = __nccwpck_require__(5811);
 const { InputSpec } = sdk_1.sdk;
 exports.inputSpec = InputSpec.of({
     smtp: sdk_1.sdk.inputSpecConstants.smtpInputSpec,
 });
-exports.manageSmtp = sdk_1.sdk.Action.withInput(
-// id
-'manage-smtp', 
-// metadata
-async ({ effects }) => ({
-    name: 'Set Name',
-    description: 'Set your name so Hello World can say hello to you',
-    warning: null,
-    allowedStatuses: 'any',
-    group: null,
-    visibility: 'enabled',
-}), 
-// form input specification
-exports.inputSpec, 
-// optionally pre-fill the input form
-async ({ effects }) => sdk_1.sdk.store.getOwn(effects, sdk_1.sdk.StorePath.smtp).const(), 
-// the execution function
 async ({ effects, input }) => sdk_1.sdk.store.setOwn(effects, sdk_1.sdk.StorePath.smtp, input.smtp));
 
 
