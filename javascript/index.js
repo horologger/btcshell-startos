@@ -27698,27 +27698,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.actions = void 0;
 const sdk_1 = __nccwpck_require__(5811);
 const set_primary_url_1 = __nccwpck_require__(7636);
-const registrations_1 = __nccwpck_require__(4921);
-const manage_smtp_1 = __nccwpck_require__(6893);
 exports.actions = sdk_1.sdk.Actions.of()
     .addAction(set_primary_url_1.setPrimaryUrl)
-    .addAction(registrations_1.registrations)
-
-
-/***/ }),
-
-/***/ 6893:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const sdk_1 = __nccwpck_require__(5811);
-const { InputSpec } = sdk_1.sdk;
-exports.inputSpec = InputSpec.of({
-    smtp: sdk_1.sdk.inputSpecConstants.smtpInputSpec,
-});
-async ({ effects, input }) => sdk_1.sdk.store.setOwn(effects, sdk_1.sdk.StorePath.smtp, input.smtp));
 
 
 /***/ }),
@@ -27729,37 +27710,7 @@ async ({ effects, input }) => sdk_1.sdk.store.setOwn(effects, sdk_1.sdk.StorePat
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.registrations = void 0;
 const sdk_1 = __nccwpck_require__(5811);
-exports.registrations = sdk_1.sdk.Action.withoutInput(
-// id
-'registrations', 
-// metadata
-async ({ effects }) => {
-    const disabled = await sdk_1.sdk.store
-        .getOwn(effects, sdk_1.sdk.StorePath.BTCSHELL__service__DISABLE_REGISTRATION)
-        .const();
-    return {
-        name: disabled ? 'Enable Registrations' : 'Disable Registrations',
-        description: disabled
-            ? 'Allow new accounts to be created on your server'
-            : 'Prohibit new accounts from being created on your server',
-        warning: disabled
-            ? 'Anyone with your BTCShell URL will be able to create an account on your server, which represents a security risk. Be careful!'
-            : null,
-        allowedStatuses: 'any',
-        group: null,
-        visibility: 'enabled',
-    };
-}, 
-// the execution function
-async ({ effects }) => {
-    const disabled = await sdk_1.sdk.store
-        .getOwn(effects, sdk_1.sdk.StorePath.BTCSHELL__service__DISABLE_REGISTRATION)
-        .const();
-    sdk_1.sdk.store.setOwn(effects, sdk_1.sdk.StorePath.BTCSHELL__service__DISABLE_REGISTRATION, !disabled);
-});
-
 
 /***/ }),
 
