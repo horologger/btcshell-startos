@@ -5,7 +5,7 @@ import { load } from 'js-yaml'
 import { getHttpInterfaceUrls } from '../utils'
 
 export const v0_0_3 = VersionInfo.of({
-  version: '0.0.3',
+  version: '0.0.3:0',
   releaseNotes: 'Revamped for StartOS 0.3.6',
   migrations: {
     up: async ({ effects }) => {

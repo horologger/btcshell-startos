@@ -1,4 +1,4 @@
-PACKAGE_ID := gitea
+PACKAGE_ID := btcshell
 
 # Phony targets
 .PHONY: all clean install
