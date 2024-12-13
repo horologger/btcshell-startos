@@ -70,7 +70,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     env: { 
       GOTTY_PORT: '8080', 
       APP_USER: 'admin', 
-      APP_PASSWORD: 'Whatever8', 
+      APP_PASSWORD: '', 
       BTC_RPC_HOST: '192.168.1.84',
       BTC_RPC_PORT: '8332', 
       BTC_RPC_USER: '',

@@ -27972,7 +27972,7 @@ exports.main = sdk_1.sdk.setupMain(async ({ effects, started }) => {
         // exec /usr/bin/gotty --port 8080 -c $GOTTY_CREDS --permit-write --reconnect /bin/bash
         // command: ['/usr/bin/gotty', '--port', '8080', '-c', 'admin:Whatever1', '--permit-write', '--reconnect', '/bin/bash'],
         // /usr/bin/docker_entrypoint.sh
-        command: ['/usr/bin/docker_entrypoint.sh'],
+        command: [''],
         env: {
             GOTTY_PORT: '8080',
             APP_USER: 'admin',
