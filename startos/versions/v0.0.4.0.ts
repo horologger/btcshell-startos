@@ -4,8 +4,8 @@ import { readFile, rmdir } from 'fs/promises'
 import { load } from 'js-yaml'
 import { getHttpInterfaceUrls } from '../utils'
 
-export const v0_0_3 = VersionInfo.of({
-  version: '0.0.3:0',
+export const v0040 = VersionInfo.of({
+  version: '0.0.4:0',
   releaseNotes: 'Revamped for StartOS 0.3.6',
   migrations: {
     up: async ({ effects }) => {
@@ -36,7 +36,6 @@ export const v0_0_3 = VersionInfo.of({
             ? u.includes('.local')
             : u.startsWith('http:') && u.includes('.onion'),
         )!,
-        BTCSHELL__service__DISABLE_REGISTRATION: true,
         smtp: smtp
           ? {
               selection: 'custom',

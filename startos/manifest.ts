@@ -18,7 +18,7 @@ export const manifest = setupManifest({
   images: {
     btcshell: {
       source: {
-        dockerTag: 'horologger/btcshell:v0.0.3',
+        dockerTag: 'horologger/btcshell:v0.0.4',
       },
     },
   },

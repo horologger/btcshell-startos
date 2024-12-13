@@ -60,7 +60,7 @@ export const setPrimaryUrl = sdk.Action.withInput(
   async ({ effects }) => ({
     name: 'Set Primary Url',
     description:
-      'Choose which of your BTCShell http URLs should serve as the primary URL for the purposes of creating links, sending invites, etc.',
+      'Choose which of your BTCShell http URLs should serve as the primary URL.',
     warning: null,
     allowedStatuses: 'any',
     group: null,

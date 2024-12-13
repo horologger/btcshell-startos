@@ -27699,18 +27699,8 @@ exports.actions = void 0;
 const sdk_1 = __nccwpck_require__(5811);
 const set_primary_url_1 = __nccwpck_require__(7636);
 exports.actions = sdk_1.sdk.Actions.of()
-    .addAction(set_primary_url_1.setPrimaryUrl)
+    .addAction(set_primary_url_1.setPrimaryUrl);
 
-
-/***/ }),
-
-/***/ 4921:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const sdk_1 = __nccwpck_require__(5811);
 
 /***/ }),
 
@@ -27768,7 +27758,7 @@ exports.setPrimaryUrl = sdk_1.sdk.Action.withInput(
 // metadata
 async ({ effects }) => ({
     name: 'Set Primary Url',
-    description: 'Choose which of your BTCShell http URLs should serve as the primary URL for the purposes of creating links, sending invites, etc.',
+    description: 'Choose which of your BTCShell http URLs should serve as the primary URL.',
     warning: null,
     allowedStatuses: 'any',
     group: null,
@@ -27848,7 +27838,6 @@ const install = sdk_1.sdk.setupInstall(async ({ effects }) => {
             len: 32,
         }),
         BTCSHELL__server__ROOT_URL: '',
-        BTCSHELL__service__DISABLE_REGISTRATION: true,
         smtp: {
             selection: 'disabled',
             value: {},
@@ -27979,8 +27968,20 @@ exports.main = sdk_1.sdk.setupMain(async ({ effects, started }) => {
      */
     return sdk_1.sdk.Daemons.of(effects, started, healthReceipts).addDaemon('primary', {
         image: { id: 'btcshell' },
-        command: ['/usr/bin/entrypoint', '--', '/bin/s6-svscan', '/etc/s6'],
-        env,
+        // command: ['/usr/bin/entrypoint', '--', '/bin/s6-svscan', '/etc/s6'],
+        // exec /usr/bin/gotty --port 8080 -c $GOTTY_CREDS --permit-write --reconnect /bin/bash
+        // command: ['/usr/bin/gotty', '--port', '8080', '-c', 'admin:Whatever1', '--permit-write', '--reconnect', '/bin/bash'],
+        // /usr/bin/docker_entrypoint.sh
+        command: ['/usr/bin/docker_entrypoint.sh'],
+        env: {
+            GOTTY_PORT: '8080',
+            APP_USER: 'admin',
+            APP_PASSWORD: 'Whatever8',
+            BTC_RPC_HOST: '192.168.1.84',
+            BTC_RPC_PORT: '8332',
+            BTC_RPC_USER: 'bearerasset',
+            BTC_RPC_PASSWORD: 'nocounterpartyrisk',
+        },
         mounts: sdk_1.sdk.Mounts.of().addVolume('main', null, '/data', false),
         ready: {
             display: 'Web Interface',
@@ -28022,7 +28023,7 @@ exports.manifest = (0, start_sdk_1.setupManifest)({
     images: {
         btcshell: {
             source: {
-                dockerTag: 'horologger/btcshell:v0.0.3',
+                dockerTag: 'horologger/btcshell:v0.0.4',
             },
         },
     },
@@ -28085,7 +28086,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.uiPort = void 0;
 exports.getHttpInterfaceUrls = getHttpInterfaceUrls;
 const sdk_1 = __nccwpck_require__(5811);
-exports.uiPort = 3000;
+exports.uiPort = 8080;
 async function getHttpInterfaceUrls(effects) {
     var _a;
     const httpInterface = await sdk_1.sdk.serviceInterface
@@ -28105,26 +28106,26 @@ async function getHttpInterfaceUrls(effects) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.versions = void 0;
 const start_sdk_1 = __nccwpck_require__(1098);
-const v0_0_3_1 = __nccwpck_require__(9090);
-exports.versions = start_sdk_1.VersionGraph.of(v0_0_3_1.v0_0_3);
+const v0_0_4_0_1 = __nccwpck_require__(3541);
+exports.versions = start_sdk_1.VersionGraph.of(v0_0_4_0_1.v0040);
 
 
 /***/ }),
 
-/***/ 9090:
+/***/ 3541:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.v0_0_3 = void 0;
+exports.v0040 = void 0;
 const start_sdk_1 = __nccwpck_require__(1098);
 const sdk_1 = __nccwpck_require__(5811);
 const promises_1 = __nccwpck_require__(1943);
 const js_yaml_1 = __nccwpck_require__(4281);
 const utils_1 = __nccwpck_require__(1225);
-exports.v0_0_3 = start_sdk_1.VersionInfo.of({
-    version: '0.0.3:0',
+exports.v0040 = start_sdk_1.VersionInfo.of({
+    version: '0.0.4:0',
     releaseNotes: 'Revamped for StartOS 0.3.6',
     migrations: {
         up: async ({ effects }) => {
@@ -28137,7 +28138,6 @@ exports.v0_0_3 = start_sdk_1.VersionInfo.of({
                 BTCSHELL__server__ROOT_URL: urls.find((u) => localMode
                     ? u.includes('.local')
                     : u.startsWith('http:') && u.includes('.onion')),
-                BTCSHELL__service__DISABLE_REGISTRATION: true,
                 smtp: smtp
                     ? {
                         selection: 'custom',

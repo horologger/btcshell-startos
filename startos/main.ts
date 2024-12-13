@@ -62,8 +62,20 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    */
   return sdk.Daemons.of(effects, started, healthReceipts).addDaemon('primary', {
     image: { id: 'btcshell' },
-    command: ['/usr/bin/entrypoint', '--', '/bin/s6-svscan', '/etc/s6'],
-    env,
+    // command: ['/usr/bin/entrypoint', '--', '/bin/s6-svscan', '/etc/s6'],
+    // exec /usr/bin/gotty --port 8080 -c $GOTTY_CREDS --permit-write --reconnect /bin/bash
+    // command: ['/usr/bin/gotty', '--port', '8080', '-c', 'admin:Whatever1', '--permit-write', '--reconnect', '/bin/bash'],
+    // /usr/bin/docker_entrypoint.sh
+    command: ['/usr/bin/docker_entrypoint.sh'],
+    env: { 
+      GOTTY_PORT: '8080', 
+      APP_USER: 'admin', 
+      APP_PASSWORD: 'Whatever8', 
+      BTC_RPC_HOST: '192.168.1.84',
+      BTC_RPC_PORT: '8332', 
+      BTC_RPC_USER: '',
+      BTC_RPC_PASSWORD: '',
+    },
     mounts: sdk.Mounts.of().addVolume('main', null, '/data', false),
     ready: {
       display: 'Web Interface',

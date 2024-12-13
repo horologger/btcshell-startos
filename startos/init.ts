@@ -15,7 +15,6 @@ const install = sdk.setupInstall(async ({ effects }) => {
       len: 32,
     }),
     BTCSHELL__server__ROOT_URL: '',
-    BTCSHELL__service__DISABLE_REGISTRATION: true,
     smtp: {
       selection: 'disabled',
       value: {},

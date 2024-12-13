@@ -1,7 +1,7 @@
 import { Effects } from '@start9labs/start-sdk/base/lib/Effects'
 import { sdk } from './sdk'
 
-export const uiPort = 3000
+export const uiPort = 8080
 
 export async function getHttpInterfaceUrls(
   effects: Effects,
