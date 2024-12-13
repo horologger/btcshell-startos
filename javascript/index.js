@@ -27972,15 +27972,15 @@ exports.main = sdk_1.sdk.setupMain(async ({ effects, started }) => {
         // exec /usr/bin/gotty --port 8080 -c $GOTTY_CREDS --permit-write --reconnect /bin/bash
         // command: ['/usr/bin/gotty', '--port', '8080', '-c', 'admin:Whatever1', '--permit-write', '--reconnect', '/bin/bash'],
         // /usr/bin/docker_entrypoint.sh
-        command: [''],
+        command: ['/usr/bin/docker_entrypoint.sh'],
         env: {
             GOTTY_PORT: '8080',
             APP_USER: 'admin',
-            APP_PASSWORD: 'Whatever8',
+            APP_PASSWORD: '',
             BTC_RPC_HOST: '192.168.1.84',
             BTC_RPC_PORT: '8332',
-            BTC_RPC_USER: 'bearerasset',
-            BTC_RPC_PASSWORD: 'nocounterpartyrisk',
+            BTC_RPC_USER: '',
+            BTC_RPC_PASSWORD: '',
         },
         mounts: sdk_1.sdk.Mounts.of().addVolume('main', null, '/data', false),
         ready: {
