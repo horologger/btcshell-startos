@@ -3,12 +3,9 @@ import { sdk } from './sdk'
 
 export const uiPort = 8080
 
-export async function getHttpInterfaceUrls(
-  effects: Effects,
-): Promise<string[]> {
-  const httpInterface = await sdk.serviceInterface
-    .getOwn(effects, 'http')
-    .const()
-
-  return httpInterface?.addressInfo?.urls || []
+export function randomPassword() {
+  return {
+    charset: 'a-z,A-Z,1-9,!,@,$,%,&,*',
+    len: 22,
+  }
 }

@@ -10,42 +10,6 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    */
   console.info('Starting BTCShell!')
 
-  const { BTCSHELL__server__ROOT_URL, BTCSHELL__security__SECRET_KEY, smtp } =
-    await sdk.store.getOwn(effects, sdk.StorePath).const()
-
-  let smtpCredentials: T.SmtpValue | null = null
-
-  if (smtp.selection === 'system') {
-    smtpCredentials = await sdk.getSystemSmtp(effects).const()
-    if (smtpCredentials && smtp.value.customFrom)
-      smtpCredentials.from = smtp.value.customFrom
-  } else if (smtp.selection === 'custom') {
-    smtpCredentials = smtp.value
-  }
-
-  let mailer: BTCShellMailer = {
-    BTCSHELL__mailer__ENABLED: 'false',
-  }
-  if (smtpCredentials) {
-    mailer = {
-      BTCSHELL__mailer__ENABLED: 'true',
-      BTCSHELL__mailer__SMTP_ADDR: smtpCredentials.server,
-      BTCSHELL__mailer__SMTP_PORT: String(smtpCredentials.port),
-      BTCSHELL__mailer__FROM: smtpCredentials.from,
-      BTCSHELL__mailer__USER: smtpCredentials.login,
-    }
-    if (smtpCredentials.password)
-      mailer.BTCSHELL__mailer__PASSWD = smtpCredentials.password
-  }
-
-  const env: BTCShellEnv = {
-    BTCSHELL__lfs__PATH: '/data/git/lfs',
-    BTCSHELL__server__ROOT_URL,
-    BTCSHELL__security__INSTALL_LOCK: 'true',
-    BTCSHELL__security__SECRET_KEY,
-    ...(mailer || {}),
-  }
-
   /**
    * ======================== Additional Health Checks (optional) ========================
    *
@@ -61,18 +25,23 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    * Each daemon defines its own health check, which can optionally be exposed to the user.
    */
   return sdk.Daemons.of(effects, started, healthReceipts).addDaemon('primary', {
-    image: { id: 'btcshell' },
-    // command: ['/usr/bin/entrypoint', '--', '/bin/s6-svscan', '/etc/s6'],
-    // exec /usr/bin/gotty --port 8080 -c $GOTTY_CREDS --permit-write --reconnect /bin/bash
-    // command: ['/usr/bin/gotty', '--port', '8080', '-c', 'admin:Whatever1', '--permit-write', '--reconnect', '/bin/bash'],
-    // /usr/bin/docker_entrypoint.sh
-    command: ['/usr/bin/docker_entrypoint.sh'],
-    env: { 
-      GOTTY_PORT: '8080', 
-      APP_USER: 'admin', 
-      APP_PASSWORD: '', 
-      BTC_RPC_HOST: '192.168.1.84',
-      BTC_RPC_PORT: '8332', 
+    subcontainer: { imageId: 'btcshell' },
+    command: [
+      '/usr/bin/gotty',
+      '--port',
+      '8080',
+      '-c',
+      'admin:Whatever1',
+      '--permit-write',
+      '--reconnect',
+      '/bin/bash',
+    ],
+    env: {
+      GOTTY_PORT: '8080',
+      APP_USER: 'admin',
+      APP_PASSWORD: '',
+      BTC_RPC_HOST: '',
+      BTC_RPC_PORT: '8332',
       BTC_RPC_USER: '',
       BTC_RPC_PASSWORD: '',
     },
@@ -89,23 +58,3 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     requires: [],
   })
 })
-
-type BTCShellEnv = Partial<NonNullable<BTCShellMailer>> & {
-  BTCSHELL__lfs__PATH: '/data/git/lfs'
-  BTCSHELL__server__ROOT_URL: string
-  BTCSHELL__security__INSTALL_LOCK: 'true'
-  BTCSHELL__security__SECRET_KEY: string
-}
-
-type BTCShellMailer =
-  | {
-      BTCSHELL__mailer__ENABLED: 'false'
-    }
-  | {
-      BTCSHELL__mailer__ENABLED: 'true'
-      BTCSHELL__mailer__SMTP_ADDR: string
-      BTCSHELL__mailer__SMTP_PORT: string
-      BTCSHELL__mailer__FROM: string
-      BTCSHELL__mailer__USER: string
-      BTCSHELL__mailer__PASSWD?: string
-    }

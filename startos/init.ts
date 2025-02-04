@@ -5,23 +5,37 @@ import { setInterfaces } from './interfaces'
 import { versions } from './versions'
 import { actions } from './actions'
 import { utils } from '@start9labs/start-sdk'
-import { setPrimaryUrl } from './actions/set-primary-url'
+import { generateRpcUser } from 'bitcoind-startos/startos/actions/generateRpcUser'
+import { resetPassword } from './actions/resetPassword'
+import { randomPassword } from './utils'
 
 // **** Install ****
 const install = sdk.setupInstall(async ({ effects }) => {
-  await sdk.store.setOwn(effects, sdk.StorePath, {
-    BTCSHELL__security__SECRET_KEY: utils.getDefaultString({
-      charset: 'A-Z,a-z,0-9,+,/',
-      len: 32,
-    }),
-    BTCSHELL__server__ROOT_URL: '',
-    smtp: {
-      selection: 'disabled',
-      value: {},
-    },
+  const btcUsername = `btcshell-${utils.getDefaultString({ charset: 'a-zA-Z', len: 8 })}`
+  const btcPassword = utils.getDefaultString(randomPassword())
+
+  await sdk.action.requestOwn(effects, resetPassword, 'critical', {
+    reason: 'Needed to obtain BTC Shell UI password',
   })
 
-  await sdk.action.requestOwn(effects, setPrimaryUrl, 'critical')
+  await sdk.action.request(effects, 'bitcoind', generateRpcUser, 'critical', {
+    input: {
+      kind: 'partial',
+      value: {
+        username: btcUsername,
+        password: btcPassword,
+      },
+    },
+    reason: 'BTC Shell needs an RPC user in Bitcoin',
+  })
+
+  await sdk.store.setOwn(effects, sdk.StorePath, {
+    hasPass: false,
+    btcAuth: {
+      username: btcUsername,
+      password: btcPassword,
+    },
+  })
 })
 
 // **** Uninstall ****

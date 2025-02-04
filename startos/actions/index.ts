@@ -1,5 +1,4 @@
 import { sdk } from '../sdk'
-import { setPrimaryUrl } from './set-primary-url'
+import { resetPassword } from './resetPassword'
 
-export const actions = sdk.Actions.of()
-  .addAction(setPrimaryUrl)
+export const actions = sdk.Actions.of().addAction(resetPassword)

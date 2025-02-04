@@ -1,11 +1,7 @@
-.DS_Store
-.env
-*.db
-*.macaroon
-node_modules
-docker-images/
 *.s9pk
-scripts/*.js
-.vscode
-NOTES.md
-pre-036/
+startos/*.js
+node_modules/
+.DS_Store
+.vscode/
+docker-images
+javascript

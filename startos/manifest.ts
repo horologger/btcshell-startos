@@ -2,8 +2,8 @@ import { setupManifest } from '@start9labs/start-sdk'
 
 export const manifest = setupManifest({
   id: 'btcshell',
-  title: 'BTCShell',
-  license: 'mit',
+  title: 'BTC Shell',
+  license: 'apache',
   wrapperRepo: 'https://github.com/horologger/btcshell-startos',
   upstreamRepo: 'https://github.com/horologger/btcshell',
   supportSite: 'https://github.com/horologger/btcshell/issues',
@@ -31,5 +31,11 @@ export const manifest = setupManifest({
     start: null,
     stop: null,
   },
-  dependencies: {},
+  dependencies: {
+    bitcoind: {
+      description: 'BTC Shell uses Bitcoin for all its needs',
+      optional: false,
+      s9pk: '../hello-world-startos/hello-world.s9pk', // @TODO
+    },
+  },
 })
