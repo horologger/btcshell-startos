@@ -5,7 +5,7 @@ import { setInterfaces } from './interfaces'
 import { versions } from './versions'
 import { actions } from './actions'
 import { utils } from '@start9labs/start-sdk'
-import { generateRpcUser } from 'bitcoind-startos/startos/actions/generateRpcUser'
+import { generateRpcUserDependent } from 'bitcoind-startos/startos/actions/generateRpcUserDependent'
 import { resetPassword } from './actions/resetPassword'
 import { randomPassword } from './utils'
 
@@ -18,16 +18,22 @@ const install = sdk.setupInstall(async ({ effects }) => {
     reason: 'Needed to obtain BTC Shell UI password',
   })
 
-  await sdk.action.request(effects, 'bitcoind', generateRpcUser, 'critical', {
-    input: {
-      kind: 'partial',
-      value: {
-        username: btcUsername,
-        password: btcPassword,
+  await sdk.action.request(
+    effects,
+    'bitcoind',
+    generateRpcUserDependent,
+    'critical',
+    {
+      input: {
+        kind: 'partial',
+        value: {
+          username: btcUsername,
+          password: btcPassword,
+        },
       },
+      reason: 'BTC Shell needs an RPC user in Bitcoin',
     },
-    reason: 'BTC Shell needs an RPC user in Bitcoin',
-  })
+  )
 
   await sdk.store.setOwn(effects, sdk.StorePath, {
     hasPass: false,
