@@ -62,7 +62,7 @@ interfaces:
       - http
 dependencies:
   bitcoind:
-    version: ">=27.1.0 <28.0.0"
+    version: ">=28.0.0 <29.0.0"
     description: BTC Shell works with your Bitcoin Core
     requirement:
       type: "required"
