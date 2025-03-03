@@ -28,17 +28,17 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    */
   return sdk.Daemons.of(effects, started, healthReceipts).addDaemon('primary', {
     subcontainer: { imageId: 'btcshell' },
-    // command: [
-    //   '/usr/bin/gotty',
-    //   '-c',
-    //   'admin:Whatever',
-    //   '--permit-write',
-    //   '--reconnect',
-    //   '/bin/bash',
-    // ],
     command: [
-      '/usr/local/bin/docker_entrypoint.sh',
+      '/usr/bin/gotty',
+      '-c',
+      'admin:Whatever',
+      '--permit-write',
+      '--reconnect',
+      '/bin/bash',
     ],
+    // command: [
+    //   '/usr/local/bin/docker_entrypoint.sh',
+    // ],
     env: {
       GOTTY_PORT: '8080',
       APP_USER: 'admin',
