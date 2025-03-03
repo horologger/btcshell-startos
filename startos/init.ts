@@ -11,7 +11,7 @@ import { randomPassword } from './utils'
 
 // **** Install ****
 const install = sdk.setupInstall(async ({ effects }) => {
-  const btcUsername = `btcshell-${utils.getDefaultString({ charset: 'a-z,A-Z', len: 8 })}`
+  const btcUsername = `btcshell_${utils.getDefaultString({ charset: 'a-z,A-Z', len: 8 })}`
   const btcPassword = utils.getDefaultString(randomPassword())
 
   await sdk.action.requestOwn(effects, resetPassword, 'critical', {
