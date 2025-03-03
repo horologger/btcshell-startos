@@ -36,7 +36,7 @@ const install = sdk.setupInstall(async ({ effects }) => {
   )
 
   await sdk.store.setOwn(effects, sdk.StorePath, {
-    hasPass: false,
+    password: null,
     btcAuth: {
       username: btcUsername,
       password: btcPassword,

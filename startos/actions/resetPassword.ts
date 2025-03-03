@@ -9,7 +9,7 @@ export const resetPassword = sdk.Action.withoutInput(
   // metadata
   async ({ effects }) => {
     const hasPassword = await sdk.store
-      .getOwn(effects, sdk.StorePath.hasPass)
+      .getOwn(effects, sdk.StorePath.password)
       .const()
 
     return {
@@ -28,7 +28,7 @@ export const resetPassword = sdk.Action.withoutInput(
   async ({ effects }) => {
     const password = utils.getDefaultString(randomPassword())
 
-    await sdk.store.setOwn(effects, sdk.StorePath.hasPass, true)
+    await sdk.store.setOwn(effects, sdk.StorePath.password, password)
 
     return {
       version: '1',

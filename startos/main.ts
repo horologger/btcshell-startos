@@ -10,6 +10,8 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    */
   console.info('Starting BTCShell!')
 
+  const store = await sdk.store.getOwn(effects, sdk.StorePath).const()
+
   /**
    * ======================== Additional Health Checks (optional) ========================
    *
@@ -28,10 +30,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     subcontainer: { imageId: 'btcshell' },
     command: [
       '/usr/bin/gotty',
-      '--port',
-      '8080',
       '-c',
-      'admin:Whatever1',
       '--permit-write',
       '--reconnect',
       '/bin/bash',
@@ -39,11 +38,11 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     env: {
       GOTTY_PORT: '8080',
       APP_USER: 'admin',
-      APP_PASSWORD: '',
-      BTC_RPC_HOST: '',
+      APP_PASSWORD: store.password!,
+      BTC_RPC_HOST: 'bitcoind.startos',
       BTC_RPC_PORT: '8332',
-      BTC_RPC_USER: '',
-      BTC_RPC_PASSWORD: '',
+      BTC_RPC_USER: store.btcAuth.username,
+      BTC_RPC_PASSWORD: store.btcAuth.password,
     },
     mounts: sdk.Mounts.of().addVolume('main', null, '/data', false),
     ready: {
