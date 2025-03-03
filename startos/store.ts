@@ -1,7 +1,7 @@
 import { setupExposeStore } from '@start9labs/start-sdk'
 
 export type Store = {
-  hasPass: boolean
+  password: string | null
   btcAuth: {
     username: string
     password: string
