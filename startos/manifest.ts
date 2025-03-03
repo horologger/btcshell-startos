@@ -35,7 +35,7 @@ export const manifest = setupManifest({
     bitcoind: {
       description: 'BTC Shell uses Bitcoin for all its needs',
       optional: false,
-      s9pk: '../hello-world-startos/hello-world.s9pk', // @TODO
+      s9pk: '../bitcoind-startos/bitcoind.s9pk', // @TODO
     },
   },
 })
