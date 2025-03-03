@@ -3,3 +3,4 @@ npm install -g deno@1.46.3
 
 https://github.com/Start9Labs/bitcoind-startos/releases/download/v28.1.0.0-alpha.1/bitcoind.s9pk
 
+p&xMu&HCu686DAVqz@4JC2

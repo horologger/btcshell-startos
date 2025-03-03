@@ -30,7 +30,6 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     subcontainer: { imageId: 'btcshell' },
     command: [
       '/usr/bin/gotty',
-      '-c',
       '--permit-write',
       '--reconnect',
       '/bin/bash',
