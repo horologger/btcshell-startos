@@ -12,6 +12,9 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
 
   const store = await sdk.store.getOwn(effects, sdk.StorePath).const()
 
+  const un = 'admin'
+  const unpw = un+':'+store.password!
+
   /**
    * ======================== Additional Health Checks (optional) ========================
    *
@@ -31,7 +34,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     command: [
       '/usr/bin/gotty',
       '-c',
-      'admin:Whatever',
+      unpw,
       '--permit-write',
       '--reconnect',
       '/bin/bash',
@@ -41,7 +44,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     // ],
     env: {
       GOTTY_PORT: '8080',
-      APP_USER: 'admin',
+      APP_USER: un,
       APP_PASSWORD: store.password!,
       BITCOIN_RPCCONNECT: 'bitcoind.embassy',
       BITCOIN_RPCPORT: '8332',
