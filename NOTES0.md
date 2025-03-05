@@ -8,4 +8,4 @@ fc3SDBgdMR$OKgn!DWrDoq
 
 /media/startos/data/package-data/volumes/bitcoind/data/main/bitcoin.conf
 
-FK69UY7XAXNiPRqmrOaVkI
+rAoaVlOrGSMjbndHncxzmr
