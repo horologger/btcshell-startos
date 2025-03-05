@@ -34,7 +34,7 @@ export const resetPassword = sdk.Action.withoutInput(
       version: '1',
       title: 'Success',
       message:
-        'Your password is below. Write it down or save it to a password manager. Enter admin as the user.',
+        'Your password is below. Write it down or save it to a password manager. Enter "admin" as the Username when prompted after launching the UI.',
       result: {
         type: 'single',
         value: password,
