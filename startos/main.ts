@@ -13,14 +13,14 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   const store = await sdk.store.getOwn(effects, sdk.StorePath).const()
 
   const un = 'admin'
-  const unpw = un+':'+store.password!
+  const unpw = un + ':' + store.password!
 
   /**
    * ======================== Additional Health Checks (optional) ========================
    *
    * In this section, we define *additional* health checks beyond those included with each daemon (below).
    */
-  const healthReceipts: T.HealthReceipt[] = []
+  const healthReceipts: T.HealthCheck[] = []
 
   /**
    * ======================== Daemons ========================

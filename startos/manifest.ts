@@ -13,15 +13,8 @@ export const manifest = setupManifest({
     short: 'Shell with bitcoin-cli tools.',
     long: 'Shell with bitcoin-cli tools.',
   },
-  assets: [],
   volumes: ['main'],
-  images: {
-    btcshell: {
-      source: {
-        dockerTag: 'horologger/btcshell:v0.0.6',
-      },
-    },
-  },
+  images: { btcshell: { source: { dockerTag: 'horologger/btcshell:v0.0.6' } } },
   hardwareRequirements: {},
   alerts: {
     install: null,
