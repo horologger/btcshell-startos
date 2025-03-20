@@ -1,7 +1,7 @@
 id: btcshell
 title: BTC Shell
-version: 0.0.3
-release-notes: BTC Shell 0.0.3
+version: 0.0.6
+release-notes: BTC Shell 0.0.6
 license: Apache-2.0
 wrapper-repo: "https://github.com/horologger/btcshell-startos"
 upstream-repo: "https://github.com/horologger/btcshell"

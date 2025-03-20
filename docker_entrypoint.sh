@@ -26,13 +26,13 @@ fi
 # echo $FNOS
 # echo $FNARCH
 
-export BTC_RPC_HOST="bitcoind.embassy"
-export BTC_RPC_PORT=8332
+export BITCOIN_RPCCONNECT="bitcoind.embassy"
+export BITCOIN_RPCPORT=8332
 
-echo "BTC_RPC_HOST:" $BTC_RPC_HOST
-echo "BTC_RPC_PORT:" $BTC_RPC_PORT
+echo "BITCOIN_RPCCONNECT:" $BITCOIN_RPCCONNECT
+echo "BITCOIN_RPCPORT:" $BITCOIN_RPCPORT
 
-FNVER="27.1"
+FNVER="28.1"
 
 # This is being done in btcshell instead
 #LNDFN="lnd-$FNOS-$FNARCH-$FNVER.tar.gz"
@@ -60,8 +60,8 @@ export TOR_ADDRESS=$(yq e '.tor-address' /data/start9/config.yaml)
 export LAN_ADDRESS=$(yq e '.lan-address' /data/start9/config.yaml)
 export APP_USER=$(yq e ".user" /data/start9/config.yaml)
 export APP_PASSWORD=$(yq e ".password" /data/start9/config.yaml)
-export BTC_RPC_USER=$(yq e '.bitcoind-user' /data/start9/config.yaml)
-export BTC_RPC_PASSWORD=$(yq e '.bitcoind-password' /data/start9/config.yaml)
+export BITCOIN_RPCUSER=$(yq e '.bitcoind-user' /data/start9/config.yaml)
+export BITCOIN_RPCPASSWORD=$(yq e '.bitcoind-password' /data/start9/config.yaml)
 
 echo APP_USER = $APP_USER
 echo APP_PASSWORD = $APP_PASSWORD
@@ -77,10 +77,11 @@ echo GOTTY_CREDS = $GOTTY_CREDS
 #echo 'export PATH=/data/bin:$PATH' >> /data/setpath
 #chmod a+x /data/setpath
 
-mkdir -p ~/.bitcoin
-echo 'rpcuser='$BTC_RPC_USER > ~/.bitcoin/bitcoin.conf
-echo 'rpcpassword='$BTC_RPC_PASSWORD >> ~/.bitcoin/bitcoin.conf
-echo 'rpcconnect='$BTC_RPC_HOST >> ~/.bitcoin/bitcoin.conf
-echo 'rpcport='$BTC_RPC_PORT >> ~/.bitcoin/bitcoin.conf
+# Now in /usr/bin/build_bitcoin_conf.sh
+# mkdir -p ~/.bitcoin
+# echo 'rpcuser='$BTC_RPC_USER > ~/.bitcoin/bitcoin.conf
+# echo 'rpcpassword='$BTC_RPC_PASSWORD >> ~/.bitcoin/bitcoin.conf
+# echo 'rpcconnect='$BTC_RPC_HOST >> ~/.bitcoin/bitcoin.conf
+# echo 'rpcport='$BTC_RPC_PORT >> ~/.bitcoin/bitcoin.conf
 
 exec /usr/bin/gotty --port 8080 -c $GOTTY_CREDS --permit-write --reconnect /bin/bash
