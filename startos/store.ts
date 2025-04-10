@@ -8,4 +8,12 @@ export type Store = {
   }
 }
 
+export const initStore = {
+  password: null,
+  btcAuth: {
+    username: '',
+    password: '',
+  },
+}
+
 export const exposedStore = setupExposeStore<Store>(() => [])
