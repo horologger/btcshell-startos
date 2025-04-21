@@ -30,7 +30,12 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    * Each daemon defines its own health check, which can optionally be exposed to the user.
    */
   return sdk.Daemons.of(effects, started, healthReceipts).addDaemon('primary', {
-    subcontainer: { imageId: 'btcshell' },
+    subcontainer: await sdk.SubContainer.of(
+      effects,
+      { imageId: 'btcshell' },
+      sdk.Mounts.of().addVolume('main', null, '/data', false),
+      'btcshell-sub',
+    ),
     command: [
       '/usr/bin/gotty',
       '-c',
@@ -51,7 +56,6 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       BITCOIN_RPCUSER: store.btcAuth.username,
       BITCOIN_RPCPASSWORD: store.btcAuth.password,
     },
-    mounts: sdk.Mounts.of().addVolume('main', null, '/data', false),
     ready: {
       display: 'Web Interface',
       fn: () =>

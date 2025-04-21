@@ -9,8 +9,11 @@ import { generateRpcUserDependent } from 'bitcoind-startos/startos/actions/gener
 import { resetPassword } from './actions/resetPassword'
 import { randomPassword } from './utils'
 
-// **** Install ****
-const install = sdk.setupInstall(async ({ effects }) => {
+// **** PreInstall ****
+const preInstall = sdk.setupPreInstall(async ({ effects }) => {})
+
+// **** PostInstall ****
+const postInstall = sdk.setupPostInstall(async ({ effects }) => {
   const btcUsername = `btcshell_${utils.getDefaultString({ charset: 'a-z,A-Z', len: 8 })}`
   const btcPassword = utils.getDefaultString(randomPassword())
 
@@ -35,12 +38,9 @@ const install = sdk.setupInstall(async ({ effects }) => {
     },
   )
 
-  await sdk.store.setOwn(effects, sdk.StorePath, {
-    password: null,
-    btcAuth: {
-      username: btcUsername,
-      password: btcPassword,
-    },
+  await sdk.store.setOwn(effects, sdk.StorePath.btcAuth, {
+    username: btcUsername,
+    password: btcPassword,
   })
 })
 
@@ -52,7 +52,8 @@ const uninstall = sdk.setupUninstall(async ({ effects }) => {})
  */
 export const { packageInit, packageUninit, containerInit } = sdk.setupInit(
   versions,
-  install,
+  preInstall,
+  postInstall,
   uninstall,
   setInterfaces,
   setDependencies,

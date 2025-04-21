@@ -8,7 +8,7 @@ export type Store = {
   }
 }
 
-export const initStore = {
+export const initStore: Store = {
   password: null,
   btcAuth: {
     username: '',
