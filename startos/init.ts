@@ -16,6 +16,8 @@ const preInstall = sdk.setupPreInstall(async ({ effects }) => {})
 const postInstall = sdk.setupPostInstall(async ({ effects }) => {
   const btcUsername = `btcshell_${utils.getDefaultString({ charset: 'a-z,A-Z', len: 8 })}`
   const btcPassword = utils.getDefaultString(randomPassword())
+  // const btcUsername = `btcshell_user00`
+  // const btcPassword =  `Whatever00`
 
   await sdk.action.requestOwn(effects, resetPassword, 'critical', {
     reason: 'Needed to obtain BTC Shell UI password',
