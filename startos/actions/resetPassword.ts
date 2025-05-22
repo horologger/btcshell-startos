@@ -1,6 +1,7 @@
 import { utils } from '@start9labs/start-sdk'
 import { sdk } from '../sdk'
 import { randomPassword } from '../utils'
+import { storeJson } from '../fileModels/store.json'
 
 export const resetPassword = sdk.Action.withoutInput(
   // id
@@ -8,9 +9,7 @@ export const resetPassword = sdk.Action.withoutInput(
 
   // metadata
   async ({ effects }) => {
-    const hasPassword = await sdk.store
-      .getOwn(effects, sdk.StorePath.password)
-      .const()
+    const hasPassword = await storeJson.read((s) => s.password).const(effects)
 
     return {
       name: hasPassword ? 'Reset password' : 'Create password',
@@ -28,7 +27,7 @@ export const resetPassword = sdk.Action.withoutInput(
   async ({ effects }) => {
     const password = utils.getDefaultString(randomPassword())
 
-    await sdk.store.setOwn(effects, sdk.StorePath.password, password)
+    await storeJson.merge(effects, { password })
 
     return {
       version: '1',

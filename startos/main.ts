@@ -1,6 +1,7 @@
 import { sdk } from './sdk'
 import { T } from '@start9labs/start-sdk'
 import { uiPort } from './utils'
+import { storeJson } from './fileModels/store.json'
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
   /**
@@ -10,10 +11,13 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    */
   console.info('Starting BTCShell!')
 
-  const store = await sdk.store.getOwn(effects, sdk.StorePath).const()
+  const store = await storeJson.read().const(effects)
+  if (!store) {
+    throw new Error('store.json not found')
+  }
 
   const un = 'admin'
-  const unpw = un + ':' + store.password!
+  const unpw = un + ':' + store.password
 
   /**
    * ======================== Additional Health Checks (optional) ========================
@@ -33,7 +37,12 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     subcontainer: await sdk.SubContainer.of(
       effects,
       { imageId: 'btcshell' },
-      sdk.Mounts.of().addVolume({volumeId: 'main', subpath: null, mountpoint: '/data', readonly: false}),
+      sdk.Mounts.of().mountVolume({
+        volumeId: 'main',
+        subpath: null,
+        mountpoint: '/data',
+        readonly: false,
+      }),
       'btcshell-sub',
     ),
     command: [
@@ -50,7 +59,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     env: {
       GOTTY_PORT: '8080',
       APP_USER: un,
-      APP_PASSWORD: store.password!,
+      APP_PASSWORD: store.password,
       BITCOIN_RPCCONNECT: 'bitcoind.startos',
       BITCOIN_RPCPORT: '8332',
       BITCOIN_RPCUSER: store.btcAuth.username,
