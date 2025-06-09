@@ -12,7 +12,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   console.info('Starting BTCShell!')
 
   const store = await storeJson.read().const(effects)
-  if (!store) {
+  if (!store || !store.password || !store.btcAuth) {
     throw new Error('store.json not found')
   }
 
@@ -46,7 +46,6 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       'btcshell-sub',
     ),
     exec: {
-
       command: [
         '/usr/bin/gotty',
         '-c',
@@ -67,7 +66,6 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
         BITCOIN_RPCUSER: store.btcAuth.username,
         BITCOIN_RPCPASSWORD: store.btcAuth.password,
       },
-
     },
     ready: {
       display: 'Web Interface',

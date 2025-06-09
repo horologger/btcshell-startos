@@ -7,7 +7,9 @@ const shape = object({
   btcAuth: object({
     username: string,
     password: string,
-  }).optional(),
+  })
+    .optional()
+    .onMismatch(undefined),
 })
 
 export const storeJson = FileHelper.json(
