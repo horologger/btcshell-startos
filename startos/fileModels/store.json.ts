@@ -3,11 +3,11 @@ import { matches, FileHelper } from '@start9labs/start-sdk'
 const { object, string } = matches
 
 const shape = object({
-  password: string,
+  password: string.optional(),
   btcAuth: object({
     username: string,
     password: string,
-  }),
+  }).optional(),
 })
 
 export const storeJson = FileHelper.json(

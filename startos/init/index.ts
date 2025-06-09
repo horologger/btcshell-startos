@@ -4,7 +4,8 @@ import { setInterfaces } from '../interfaces'
 import { versionGraph } from '../install/versionGraph'
 import { actions } from '../actions'
 import { restoreInit } from '../backups'
-import { setup } from './setup'
+import { taskBtcAuth } from './taskBtcAuth'
+import { taskSetPassword } from './taskSetPassword'
 
 export const init = sdk.setupInit(
   restoreInit,
@@ -12,7 +13,8 @@ export const init = sdk.setupInit(
   setInterfaces,
   setDependencies,
   actions,
-  setup,
+  taskBtcAuth,
+  taskSetPassword,
 )
 
 export const uninit = sdk.setupUninit(versionGraph)
