@@ -45,25 +45,29 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       }),
       'btcshell-sub',
     ),
-    command: [
-      '/usr/bin/gotty',
-      '-c',
-      unpw,
-      '--permit-write',
-      '--reconnect',
-      '/bin/bash',
-    ],
-    // command: [
-    //   '/usr/local/bin/docker_entrypoint.sh',
-    // ],
-    env: {
-      GOTTY_PORT: '8080',
-      APP_USER: un,
-      APP_PASSWORD: store.password,
-      BITCOIN_RPCCONNECT: 'bitcoind.startos',
-      BITCOIN_RPCPORT: '8332',
-      BITCOIN_RPCUSER: store.btcAuth.username,
-      BITCOIN_RPCPASSWORD: store.btcAuth.password,
+    exec: {
+
+      command: [
+        '/usr/bin/gotty',
+        '-c',
+        unpw,
+        '--permit-write',
+        '--reconnect',
+        '/bin/bash',
+      ],
+      // command: [
+      //   '/usr/local/bin/docker_entrypoint.sh',
+      // ],
+      env: {
+        GOTTY_PORT: '8080',
+        APP_USER: un,
+        APP_PASSWORD: store.password,
+        BITCOIN_RPCCONNECT: 'bitcoind.startos',
+        BITCOIN_RPCPORT: '8332',
+        BITCOIN_RPCUSER: store.btcAuth.username,
+        BITCOIN_RPCPASSWORD: store.btcAuth.password,
+      },
+
     },
     ready: {
       display: 'Web Interface',
