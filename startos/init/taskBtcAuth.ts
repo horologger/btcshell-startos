@@ -34,5 +34,6 @@ export const taskBtcAuth = sdk.setupOnInit(async (effects) => {
         password: btcPassword,
       },
     })
+    .catch(console.log)
   }
 })
