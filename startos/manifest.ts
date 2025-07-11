@@ -1,4 +1,5 @@
 import { setupManifest } from '@start9labs/start-sdk'
+import { current } from './install/versions'
 
 export const manifest = setupManifest({
   id: 'btcshell',
@@ -8,7 +9,7 @@ export const manifest = setupManifest({
   upstreamRepo: 'https://github.com/horologger/btcshell',
   supportSite: 'https://github.com/horologger/btcshell/issues',
   marketingSite: 'https://github.com/horologger/btcshell',
-  docsUrl: 'https://github.com/horologger/btcshell/issues',
+  docsUrl: `https://github.com/horologger/btcshell-startos/blob/${current.options.version.replace(':', '_')}/instructions.md`,
   donationUrl: null,
   description: {
     short: 'Shell with bitcoin-cli tools.',
