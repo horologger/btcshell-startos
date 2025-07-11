@@ -7,8 +7,9 @@ export const manifest = setupManifest({
   wrapperRepo: 'https://github.com/horologger/btcshell-startos',
   upstreamRepo: 'https://github.com/horologger/btcshell',
   supportSite: 'https://github.com/horologger/btcshell/issues',
-  docsUrl: 'https://github.com/horologger/btcshell/issues',  
   marketingSite: 'https://github.com/horologger/btcshell',
+  docsUrl: 'https://github.com/horologger/btcshell/issues',
+  donationUrl: null,
   description: {
     short: 'Shell with bitcoin-cli tools.',
     long: 'Shell with bitcoin-cli tools.',
