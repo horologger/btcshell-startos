@@ -1,7 +1,9 @@
 import { sdk } from './sdk'
 import { T } from '@start9labs/start-sdk'
-import { uiPort } from './utils'
+import { bitcoindMountpoint, uiPort } from './utils'
 import { storeJson } from './fileModels/store.json'
+import { Mounts } from '@start9labs/start-sdk/package/lib/mainFn/Mounts'
+
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
   /**
@@ -37,11 +39,19 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     subcontainer: await sdk.SubContainer.of(
       effects,
       { imageId: 'btcshell' },
-      sdk.Mounts.of().mountVolume({
+      sdk.Mounts.of()
+      .mountVolume({
         volumeId: 'main',
         subpath: null,
         mountpoint: '/data',
         readonly: false,
+      })
+      .mountDependency({
+        dependencyId: 'bitcoind',
+        volumeId: 'main',
+        subpath: null,
+        mountpoint: bitcoindMountpoint,
+        readonly: true,
       }),
       'btcshell-sub',
     ),

@@ -1,4 +1,10 @@
 import { setupManifest } from '@start9labs/start-sdk'
+import { SDKImageInputSpec } from '@start9labs/start-sdk/base/lib/types/ManifestTypes'
+
+const BUILD = process.env.BUILD || ''
+
+const arch =
+  BUILD === 'x86_64' || BUILD === 'aarch64' ? [BUILD] : ['x86_64', 'aarch64']
 
 export const manifest = setupManifest({
   id: 'btcshell',
@@ -16,8 +22,17 @@ export const manifest = setupManifest({
     long: 'Shell with bitcoin-cli tools.',
   },
   volumes: ['main'],
-  images: { btcshell: { source: { dockerTag: 'horologger/btcshell:v0.0.6' } } },
-  hardwareRequirements: {},
+  images: { 
+    btcshell: { 
+      source: { dockerTag: 'horologger/btcshell:v0.0.6' 
+
+      } ,
+      arch,
+    } as SDKImageInputSpec,
+  },
+  hardwareRequirements: {
+    arch,
+  },
   alerts: {
     install: null,
     update: null,
@@ -28,9 +43,12 @@ export const manifest = setupManifest({
   },
   dependencies: {
     bitcoind: {
-      description: 'BTC Shell uses Bitcoin for all its needs',
-      optional: false,
-      s9pk: 'https://github.com/Start9Labs/bitcoind-startos/releases/download/v28.1.0.3-alpha.6/bitcoind.s9pk',
+      description: 'Used to subscribe to new block events.',
+      optional: true,
+      metadata: {
+        title: 'A Bitcoin Full Node',
+        icon: 'https://bitcoin.org/img/icons/opengraph.png',
+      },
     },
   },
 })
